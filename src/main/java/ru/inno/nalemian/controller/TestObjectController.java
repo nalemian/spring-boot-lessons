@@ -9,15 +9,16 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/test-object")
 public class TestObjectController {
     private final TestObjectComponent testObjectComponent;
 
-    @GetMapping("/test-object")
+    @GetMapping
     public Collection<TestObject> getAllObjects() {
         return testObjectComponent.getAll();
     }
 
-    @GetMapping("/test-object/{id}")
+    @GetMapping("/{id}")
     public TestObject getObjectById(@PathVariable int id) {
         TestObject object = testObjectComponent.getById(id);
         if (object == null) {
@@ -26,12 +27,12 @@ public class TestObjectController {
         return object;
     }
 
-    @PostMapping("/test-object")
+    @PostMapping
     public TestObject addOrUpdateObject(@RequestBody TestObject testObject) {
         return testObjectComponent.add(testObject);
     }
 
-    @DeleteMapping("/test-object/{id}")
+    @DeleteMapping("/{id}")
     public TestObject deleteObject(@PathVariable int id) {
         TestObject object = testObjectComponent.removeById(id);
         if (object == null) {
