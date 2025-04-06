@@ -18,7 +18,7 @@ public class TestController {
     //@RequestMapping применяется и к классам, и к методам,
     //нужно явно указывать HTTP-метод в параметре "method",
     //используется для любых HTTP-методов
-    @RequestMapping(value = "/reqMapping", method = RequestMethod.GET)
+    @RequestMapping(value = "/req-mapping", method = RequestMethod.GET)
     public String exampleGet() {
         return "example of GET with RequestMapping";
     }
@@ -58,7 +58,7 @@ public class TestController {
 
     //При RequestBody данные отправляются в теле запроса
     //JSON автоматически преобразуется в Java-объект
-    @PostMapping("/createWithBody")
+    @PostMapping("/create-with-body")
     public TestObject createWithRequestBody(@RequestBody TestObject newObject) {
         this.currentObject = newObject;
         return currentObject;
@@ -81,7 +81,7 @@ public class TestController {
     }
 
     //PatchMapping обновляет только указанные поля объекта
-    @PatchMapping("/updateName")
+    @PatchMapping("/update-name")
     public TestObject updateName(@RequestParam String newName) {
         currentObject.setName(newName);
         return currentObject;
