@@ -4,20 +4,15 @@ import org.springframework.stereotype.Component;
 import ru.inno.nalemian.model.Document;
 
 @Component
-public class DocumentType3 implements TypeStrategy {
+public class DocumentType1Strategy implements TypeStrategy {
 
     @Override
     public String process(Document document) {
-        String value = document.getValue();
-        try {
-            return value.substring(0, 40);
-        } catch (IndexOutOfBoundsException e) {
-            return value;
-        }
+        return "1" + document.getValue() + "1";
     }
 
     @Override
     public String getNeededType() {
-        return "3";
+        return "1";
     }
 }

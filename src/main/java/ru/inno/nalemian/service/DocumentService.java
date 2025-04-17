@@ -1,25 +1,19 @@
 package ru.inno.nalemian.service;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.inno.nalemian.component.TypeStrategy;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentService {
-    @Autowired
-    private List<TypeStrategy> types;
-    private final Map<String, TypeStrategy> strategiesMap = new HashMap<>();
+    private final Map<String, TypeStrategy> strategiesMap;
 
-    @PostConstruct // выполняется один раз после создания бина (и в этом случае после заполнения types)
-    public void strategiesMapInitialization() {
-        for (TypeStrategy type : types) {
-            strategiesMap.put(type.getNeededType(), type);
-        }
+    public DocumentService(List<TypeStrategy> types) {
+        strategiesMap = types.stream()
+                .collect(Collectors.toMap(TypeStrategy::getNeededType, type -> type));
     }
 
     public TypeStrategy getStrategy(String type) {
