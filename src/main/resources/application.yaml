@@ -1,2 +1,22 @@
 server:
   port: 9999
+
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: mkyong
+    password: password
+
+  # create and drop table, good for testing, production set to none or comment it
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+# app custom property, if true, insert data for testing
+app:
+  db:
+    init:
+      enabled: true
