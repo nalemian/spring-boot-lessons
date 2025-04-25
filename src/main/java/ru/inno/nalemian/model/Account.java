@@ -16,8 +16,11 @@ import lombok.NoArgsConstructor;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private Long id;
+    @Column
     private Long accountNumber;
+    @Column
     private Double balance;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

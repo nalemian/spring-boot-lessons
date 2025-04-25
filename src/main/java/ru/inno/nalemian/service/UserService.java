@@ -15,13 +15,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
 
-    public User createUser(String fullName, Long accountNumber, Double balance) {
-        User user = new User();
-        user.setFullName(fullName);
+    public User createUser(User user) {
+        if (user.getAccounts() == null || user.getAccounts().isEmpty()) {
+            throw new RuntimeException("User must have at least one account");
+        }
         user = userRepository.save(user);
-        Account account = new Account();
-        account.setAccountNumber(accountNumber);
-        account.setBalance(balance);
+        Account account = user.getAccounts().get(0);
         account.setUser(user);
         accountRepository.save(account);
         user.setAccounts(List.of(account));

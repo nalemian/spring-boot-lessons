@@ -13,8 +13,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public User createUser(@RequestParam String fullName, @RequestParam Long accountNumber, @RequestParam Double balance) {
-        return userService.createUser(fullName, accountNumber, balance);
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
     @PostMapping("/{id}")
