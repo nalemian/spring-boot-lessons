@@ -16,11 +16,11 @@ import lombok.NoArgsConstructor;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name = "id")
     private Long id;
-    @Column
+    @Column(name = "account_number")
     private Long accountNumber;
-    @Column
+    @Column(name = "balance")
     private Double balance;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

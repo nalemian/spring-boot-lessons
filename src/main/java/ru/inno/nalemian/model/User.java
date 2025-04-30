@@ -18,9 +18,9 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name = "id")
     private Long id;
-    @Column
+    @Column(name = "full_name")
     private String fullName;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
