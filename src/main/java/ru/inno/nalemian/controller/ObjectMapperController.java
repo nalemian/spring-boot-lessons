@@ -1,25 +1,22 @@
 package ru.inno.nalemian.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.inno.nalemian.model.Car;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/object-mapper")
 public class ObjectMapperController {
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @PostMapping("/string-to-json")
     public JsonNode stringToJson(@RequestBody String jsonString) throws JsonProcessingException {
@@ -61,24 +58,5 @@ public class ObjectMapperController {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm a z");
         System.out.println("Date: " + format.format(car.getDate()));
         return car;
-    }
-
-    static class Car {
-        @JsonIgnore
-        private String color;
-        @JsonProperty(value = "brand")
-        private String type;
-        @Getter
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm a z")
-        private Date date;
-
-        public Car(String color, String type, Date date) {
-            this.color = color;
-            this.type = type;
-            this.date = date;
-        }
-
-        public Car() {
-        }
     }
 }
