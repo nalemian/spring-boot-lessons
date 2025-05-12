@@ -21,14 +21,16 @@ public class UserService {
         if (userDTO.getAccounts() == null || userDTO.getAccounts().isEmpty()) {
             throw new RuntimeException("User must have at least one account");
         }
-        User user = new User();
-        user.setFullName(userDTO.getFullName());
+        User user = User.builder()
+                .fullName(userDTO.getFullName())
+                .build();
         user = userRepository.save(user);
         AccountDTO accountDTO = userDTO.getAccounts().get(0);
-        Account account = new Account();
-        account.setAccountNumber(accountDTO.getAccountNumber());
-        account.setBalance(accountDTO.getBalance());
-        account.setUser(user);
+        Account account = Account.builder()
+                .accountNumber(accountDTO.getAccountNumber())
+                .balance(accountDTO.getBalance())
+                .user(user)
+                .build();
         accountRepository.save(account);
         user.setAccounts(List.of(account));
         accountDTO.setId(account.getId());
@@ -39,10 +41,11 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
         if (user == null)
             throw new RuntimeException("User not found");
-        Account account = new Account();
-        account.setAccountNumber(accountNumber);
-        account.setBalance(balance);
-        account.setUser(user);
+        Account account = Account.builder()
+                .accountNumber(accountNumber)
+                .balance(balance)
+                .user(user)
+                .build();
         Account savedAccount = accountRepository.save(account);
         return new AccountDTO(savedAccount.getId(), savedAccount.getAccountNumber(), savedAccount.getBalance());
     }
