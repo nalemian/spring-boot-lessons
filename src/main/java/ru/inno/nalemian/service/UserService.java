@@ -2,6 +2,8 @@ package ru.inno.nalemian.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.inno.nalemian.dto.UserDTO;
+import ru.inno.nalemian.dto.AccountDTO;
 import ru.inno.nalemian.model.Account;
 import ru.inno.nalemian.model.User;
 import ru.inno.nalemian.repository.AccountRepository;
@@ -15,33 +17,46 @@ public class UserService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
 
-    public User createUser(User user) {
-        if (user.getAccounts() == null || user.getAccounts().isEmpty()) {
+    public UserDTO createUser(UserDTO userDTO) {
+        if (userDTO.getAccounts() == null || userDTO.getAccounts().isEmpty()) {
             throw new RuntimeException("User must have at least one account");
         }
+        User user = User.builder()
+                .fullName(userDTO.getFullName())
+                .build();
         user = userRepository.save(user);
-        Account account = user.getAccounts().get(0);
-        account.setUser(user);
+        AccountDTO accountDTO = userDTO.getAccounts().get(0);
+        Account account = Account.builder()
+                .accountNumber(accountDTO.getAccountNumber())
+                .balance(accountDTO.getBalance())
+                .user(user)
+                .build();
         accountRepository.save(account);
         user.setAccounts(List.of(account));
-        return user;
+        accountDTO.setId(account.getId());
+        return new UserDTO(user.getId(), user.getFullName(), List.of(accountDTO));
     }
 
-    public Account addAccount(Long id, Long accountNumber, Double balance) {
+    public AccountDTO addAccount(Long id, Long accountNumber, Double balance) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null)
             throw new RuntimeException("User not found");
-        Account account = new Account();
-        account.setAccountNumber(accountNumber);
-        account.setBalance(balance);
-        account.setUser(user);
-        return accountRepository.save(account);
+        Account account = Account.builder()
+                .accountNumber(accountNumber)
+                .balance(balance)
+                .user(user)
+                .build();
+        Account savedAccount = accountRepository.save(account);
+        return new AccountDTO(savedAccount.getId(), savedAccount.getAccountNumber(), savedAccount.getBalance());
     }
 
-    public User getUserWithAccounts(Long id) {
+    public UserDTO getUserWithAccounts(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null)
             throw new RuntimeException("User not found");
-        return user;
+        List<AccountDTO> accounts = user.getAccounts().stream()
+                .map(account -> new AccountDTO(account.getId(), account.getAccountNumber(), account.getBalance()))
+                .toList();
+        return new UserDTO(user.getId(), user.getFullName(), accounts);
     }
 }
