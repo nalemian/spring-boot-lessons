@@ -2,8 +2,8 @@ package ru.inno.nalemian.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.inno.nalemian.dto.UserDTO;
 import ru.inno.nalemian.dto.AccountDTO;
+import ru.inno.nalemian.dto.UserDTO;
 import ru.inno.nalemian.model.Account;
 import ru.inno.nalemian.model.User;
 import ru.inno.nalemian.repository.AccountRepository;
@@ -33,7 +33,7 @@ public class UserService {
                 .build();
         accountRepository.save(account);
         user.setAccounts(List.of(account));
-        accountDTO.setId(account.getId());
+        accountDTO.setId(account.getId());  // TODO по идее, в account у тебя сейчас не должен быть установлен id, так как ты не сделала обратное присвоение account = accountRepository.save(account)
         return new UserDTO(user.getId(), user.getFullName(), List.of(accountDTO));
     }
 
