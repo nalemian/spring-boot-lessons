@@ -31,10 +31,9 @@ public class UserService {
                 .balance(accountDTO.getBalance())
                 .user(user)
                 .build();
-        accountRepository.save(account);
+        account = accountRepository.save(account);
         user.setAccounts(List.of(account));
-        accountDTO.setId(account.getId());  // TODO по идее, в account у тебя сейчас не должен быть установлен id, так как ты не сделала обратное присвоение account = accountRepository.save(account)
-        return new UserDTO(user.getId(), user.getFullName(), List.of(accountDTO));
+        return new UserDTO(user.getId(), user.getFullName(), List.of(new AccountDTO(account.getId(), account.getAccountNumber(), account.getBalance())));
     }
 
     public AccountDTO addAccount(Long id, Long accountNumber, Double balance) {
