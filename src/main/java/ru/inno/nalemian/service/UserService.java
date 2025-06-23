@@ -2,8 +2,8 @@ package ru.inno.nalemian.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.inno.nalemian.dto.UserDTO;
 import ru.inno.nalemian.dto.AccountDTO;
+import ru.inno.nalemian.dto.UserDTO;
 import ru.inno.nalemian.model.Account;
 import ru.inno.nalemian.model.User;
 import ru.inno.nalemian.repository.AccountRepository;
@@ -31,10 +31,9 @@ public class UserService {
                 .balance(accountDTO.getBalance())
                 .user(user)
                 .build();
-        accountRepository.save(account);
+        account = accountRepository.save(account);
         user.setAccounts(List.of(account));
-        accountDTO.setId(account.getId());
-        return new UserDTO(user.getId(), user.getFullName(), List.of(accountDTO));
+        return new UserDTO(user.getId(), user.getFullName(), List.of(new AccountDTO(account.getId(), account.getAccountNumber(), account.getBalance())));
     }
 
     public AccountDTO addAccount(Long id, Long accountNumber, Double balance) {
