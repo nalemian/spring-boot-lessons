@@ -51,5 +51,6 @@ class UserServiceIntegrationTest {
         assertThat(accounts).isNotNull().hasSize(1);
         assertThat(accounts.get(0).getAccountNumber()).isEqualTo(12L);
         assertThat(accounts.get(0).getBalance()).isEqualTo(100.0);
+        assertThat(userRepository.findAll()).hasSize(1);
     }
 }
