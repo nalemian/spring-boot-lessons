@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/scripts/01-init-schema.sql
+  - include:
+      file: db/changelog/scripts/02-create-sequences.sql

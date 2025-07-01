@@ -9,11 +9,21 @@ spring:
     url: jdbc:postgresql://localhost:5432/mydb
     username: mkyong
     password: password
-
-  # create and drop table, good for testing, production set to none or comment it
+    liquibase:
+      change-log: classpath:db/changelog/db.changelog-master.yaml
+      datasource:
+        url: jdbc:postgresql://localhost:5432/mydb
+        username: mkyong
+        password: password
+        driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
 
 # app custom property, if true, insert data for testing
 app:
