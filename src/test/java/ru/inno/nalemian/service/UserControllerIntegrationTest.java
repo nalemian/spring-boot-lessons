@@ -66,7 +66,7 @@ class UserControllerIntegrationTest {
     @Test
     @Order(1)
     void userController_shouldCreateUserAndAccount() {
-        AccountDTO accountDTO = new AccountDTO(null, "12CompoCe", 100.0);
+        AccountDTO accountDTO = new AccountDTO(null, "12CompoСe", 100.0);
         UserDTO userDTO = new UserDTO(null, "name", List.of(accountDTO));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
