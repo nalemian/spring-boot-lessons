@@ -1,5 +1,10 @@
 databaseChangeLog:
   - include:
+      author: nalemian
       file: db/changelog/scripts/01-init-schema.sql
   - include:
+      author: nalemian
       file: db/changelog/scripts/02-create-sequences.sql
+  - include:
+      author: kampaii
+      file: db/changelog/scripts/03-acc-number-constraint.sql

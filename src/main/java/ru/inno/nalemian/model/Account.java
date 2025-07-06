@@ -19,7 +19,7 @@ public class Account {
     @Column(name = "id")
     private Long id;
     @Column(name = "account_number")
-    private Long accountNumber;
+    private String accountNumber;
     @Column(name = "balance")
     private Double balance;
     @ManyToOne

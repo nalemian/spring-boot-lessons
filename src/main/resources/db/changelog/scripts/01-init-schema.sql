@@ -11,7 +11,7 @@ CREATE TABLE accounts
 (
     id             BIGSERIAL PRIMARY KEY,
     user_id        BIGINT REFERENCES users (id),
-    account_number BIGINT NOT NULL,
+    account_number varchar NOT NULL,
     balance        DOUBLE PRECISION
 );
 

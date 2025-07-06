@@ -30,3 +30,9 @@ app:
   db:
     init:
       enabled: true
+
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG

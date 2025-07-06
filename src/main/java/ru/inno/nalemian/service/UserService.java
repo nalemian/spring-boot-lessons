@@ -16,6 +16,7 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final AccountService accountService;
 
     public UserDTO createUser(UserDTO userDTO) {
         if (userDTO.getAccounts() == null || userDTO.getAccounts().isEmpty()) {
@@ -26,17 +27,12 @@ public class UserService {
                 .build();
         user = userRepository.save(user);
         AccountDTO accountDTO = userDTO.getAccounts().get(0);
-        Account account = Account.builder()
-                .accountNumber(accountDTO.getAccountNumber())
-                .balance(accountDTO.getBalance())
-                .user(user)
-                .build();
-        account = accountRepository.save(account);
+        Account account = accountService.createAccount(accountDTO, user);
         user.setAccounts(List.of(account));
         return new UserDTO(user.getId(), user.getFullName(), List.of(new AccountDTO(account.getId(), account.getAccountNumber(), account.getBalance())));
     }
 
-    public AccountDTO addAccount(Long id, Long accountNumber, Double balance) {
+    public AccountDTO addAccount(Long id, String accountNumber, Double balance) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null)
             throw new RuntimeException("User not found");
