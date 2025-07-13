@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 import ru.inno.nalemian.dto.AccountDTO;
 import ru.inno.nalemian.dto.UserDTO;
@@ -28,6 +29,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         webEnvironment = RANDOM_PORT
 )
 @Import(TestcontainersConfiguration.class)
+@Transactional
 class UserControllerIntegrationTest {
 
     @Autowired
@@ -43,8 +45,8 @@ class UserControllerIntegrationTest {
 
     @BeforeEach
     void checkRepos() {
-        accountRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+        assertEquals(0, userRepository.count());
+        assertEquals(0, accountRepository.count());
     }
 
     @Test
