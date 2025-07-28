@@ -2,8 +2,8 @@ package ru.inno.nalemian.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.inno.nalemian.dto.UserDTO;
 import ru.inno.nalemian.dto.AccountDTO;
+import ru.inno.nalemian.dto.UserDTO;
 import ru.inno.nalemian.service.UserService;
 
 @RestController
@@ -18,7 +18,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}")
-    public AccountDTO addAccount(@PathVariable Long id, @RequestParam Long accountNumber, @RequestParam Double balance) {
+    public AccountDTO addAccount(@PathVariable Long id, @RequestParam String accountNumber, @RequestParam Double balance) {
         return userService.addAccount(id, accountNumber, balance);
     }
 
