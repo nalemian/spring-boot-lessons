@@ -6,3 +6,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/adelya
     username: postgres
     password: postgres
+  jpa:
+    properties:
+      hibernate:
+        generate_statistics: true
+        format_sql: true
+    show-sql: true
